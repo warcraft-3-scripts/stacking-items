@@ -7,12 +7,11 @@ local config = {}
 function stackTrigger()
   --  @type item
   local manipulatedItem = GetManipulatedItem()
-  
-  if GetItemType(manipulatedItem) ~= ITEM_TYPE_CHARGED and GetItemType(manipulatedItem) ~= ITEM_TYPE_PURCHASABLE then
+
+  if GetItemCharges(manipulatedItem) <= 0 then
     return
   end
 
-  print("STACK")
   local unit = GetTriggerUnit()
   local count = utils.count(unit, manipulatedItem)
 
