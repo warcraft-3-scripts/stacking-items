@@ -1,2 +1,2 @@
 -- init stack script
-require("stack.index").init(99)
+require("stack.index").init(10)

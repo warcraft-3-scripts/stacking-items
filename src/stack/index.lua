@@ -14,6 +14,7 @@ function stackTrigger()
 
   local unit = GetTriggerUnit()
   local count = utils.count(unit, manipulatedItem)
+  local countMax = utils.countMax(unit, manipulatedItem, config["max"])
 
   -- @type integer
   local index = 0
@@ -21,18 +22,20 @@ function stackTrigger()
     -- @type item
     local itemInSlot = UnitItemInSlot(unit, index)
 
-    if count > 1 and GetItemTypeId(itemInSlot) == GetItemTypeId(manipulatedItem) then
+    print(count, countMax)
+    if count > countMax and GetItemTypeId(itemInSlot) == GetItemTypeId(manipulatedItem) and GetItemCharges(itemInSlot) < config["max"] then
       local currentCharges = GetItemCharges(itemInSlot)
 
       SetItemCharges(itemInSlot, currentCharges + GetItemCharges(manipulatedItem))
+
+      if count > countMax then
+        RemoveItem(manipulatedItem)
+      end
     end
 
     index = index + 1
   end
 
-  if count > 1 then
-    RemoveItem(manipulatedItem)
-  end
 
 end
 
